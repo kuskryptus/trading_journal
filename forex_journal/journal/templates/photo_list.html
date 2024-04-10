@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Learn from your past!</h1>
+{% for photo in photos %}
+
+<style>
+    /* Styling for the link container */
+    .link-container {
+      display: inline-block;
+      background-color: #3498db; /* Elegant blue background */
+      padding: 5px 12px; /* Slightly larger padding for elegance */
+      border-radius: 6px;
+      perspective: 1000px;
+      transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      margin-left: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  
+    /* Styling for the link */
+    .photo-link {
+      text-decoration: none;
+      color: #fff; /* White text for contrast */
+      font-weight: bold;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.2s ease-in-out;
+    }
+  
+    /* Highlight effect on hover */
+    .link-container:hover {
+      background-color: #2980b9; /* Slightly darker blue on hover */
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+    }
+  </style>
+  
+   
+  </style>
+  
+  <!-- HTML code for the link -->
+    <ul>
+      <div class="link-container">
+        <a href="{% url 'journal:photo-detail' photo.pk %}" class="photo-link">{{ photo }}</a>
+      </div>
+    </ul>
+{% endfor %}
+
+<style>
+    /* Styling for the button */
+    .my-button {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background-color 0.2s ease-in-out;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+      margin-left: 175px;
+      
+      margin-block-end: 100px !important;
+    }
+  
+    /* Styling for hover effect */
+    .my-button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      
+    }
+  </style>
+  
+  <!-- HTML code for the button -->
+  <a href="{% url 'journal:add_photo' %}" class="my-button">Add photo</a>
+
+
+  <style>
+    body {
+        background-color: #f0f0f0;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        display:inherit;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+
+    h1 {
+        font-family: Arial, sans-serif;
+        font-size: 48px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 20px;
+        background-color: #f1f1f1;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+    h1::after {
+        
+        font-size: 1rem;
+        color: #6D7E8F;
+        position: absolute;
+        top: 50%;
+        right: -2rem;
+        transform: translateY(-50%)
+    }
+</style>
+
+{% endblock %}

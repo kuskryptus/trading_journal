@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trading assets</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-sectors {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .sector {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sector:hover {
+            background-color: #f0f0f0;
+        }
+
+        .sector.selected {
+            background-color: rgb(149, 193, 250);
+            color: rgb(0, 0, 0);
+        }
+
+        button[type="submit"] {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="onboarding-title">Welcome to Trading Onboarding</h1>
+            <p>Choose the sectors you're interested in:</p>
+        </header>
+        <form method="post" action="{% url 'accounts:onboard_next' %}">
+            {% csrf_token %}
+            <div class="form-sectors">
+                {% for sector in sectors %}
+                    <div class="sector" data-id="{{sector.id}}">
+                        {{sector.name}}
+                    </div>
+                    <input type="hidden" name="selected_sectors" value="{{sector.id}}" class="selected-sector-input">
+                {% endfor %}
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+
+        const sectorElements = document.querySelectorAll('.sector');
+
+        // Add click event listener to each sector
+        sectorElements.forEach(sector => {
+            sector.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                sectorElements.forEach(sector => {
+                    const inputField = sector.nextElementSibling;
+                    inputField.value = sector.classList.contains('selected') ? sector.dataset.id : '';
+                });
+            });
+        });
+    </script>
+</body>

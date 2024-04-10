@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>TEST</h1>
+
+  
+    {% for project in projects %}
+      
+      {{project.name}}
+      {{project.content|safe}}
+      {% endfor %}
+     
+
+      <form method="POST" action="{% url 'tinymce' %}">
+        {% csrf_token %}
+        {{form.media}}
+        {{form.content}}
+     </form>
+
+     {% endblock %}

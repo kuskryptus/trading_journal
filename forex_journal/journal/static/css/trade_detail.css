@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Agdasima&family=Roboto:ital,wght@0,100;1,400&display=swap');
+
+
+.button-container {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40%
+  }
+  
+  .photos-button,
+  .back-button-detail {
+    position: relative;
+    display: inline-block;
+    padding: 3px 15px;
+    background-color: #4069a5;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    transition: background-color 0.3s;
+    ;
+  }
+
+  .transparent-cell {
+    background-color: transparent !important;
+  }
+  
+  .photos-button:hover,
+  .back-button-detail:hover {
+    background-color: #0056b3;
+  }
+  
+  .back-button-detail {
+    background-color: #ff0800;
+  }
+  
+  .back-button-detail:hover {
+    background-color: #c9302c;
+  }
+.trade-detail-metrics4 {
+ font-family: 'Agdasima', sans-serif;
+ font-size: 2rem;
+ background-color: #585858;
+}
+
+.trade-detail-data-h4 {
+    
+    font-family: 'Agdasima', sans-serif;
+    font-size: 2rem;
+    
+}
+
+.trade-card {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    height: 650px;
+    margin: 10px;
+  }
+  
+  .trade-header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .data-list {
+    list-style: none;
+    padding: 5px;
+  }
+  
+  .data-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #333;
+    padding-right: 50px;
+  }
+  
+  .value {
+    color: #555;
+  }
+
+  .container-metrics {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: 10px;
+    
+  }
+  
+
+  .metrics-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .metrics-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .value {
+    color: #555;
+  }

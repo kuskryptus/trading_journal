@@ -1,0 +1,423 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Agdasima&family=Barlow+Condensed:wght@300&family=Roboto:ital,wght@0,100;1,400&family=Share+Tech+Mono&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+:root {
+  --lighten-amount: 20%; /* You can adjust this value based on your preference */
+}
+
+/* th -table header */
+/* td -table data */
+/* tr -table row */
+
+/* body {
+  background-color: rgba(255, 255, 255, 0.438);
+} */
+
+
+
+
+.journal-table {
+  background-color: transparent !important;
+}
+
+.journal-table {
+  border-radius: 10px;
+  overflow:visible /* Ensure that rounded corners are visible */
+}
+
+
+/* Set background color to transparent for the specific cells */
+.journal-table td:nth-child(n+1) {
+  background-color: rgb(236, 236, 236);
+}
+
+.journal-table {
+  width: 80%;
+  position: static;
+  margin: 20px auto;
+  font-family: 'Agdasima', sans-serif;
+  font-weight: 550;
+  font-size: 16px;
+  border-top-left-radius: 10px;
+  color: rgba(0, 0, 0, 0.925);
+  margin-top: 100px;
+  margin-right: 100px;
+  border-radius: 10px !important;
+}
+
+
+/* Set equal width for all columns */
+ .journal_table_td {
+  padding: 5px !important;
+  text-align: left;
+  font-weight: 800;
+  width: 8%;
+}
+
+
+
+.journal-table .no-width{
+  padding: 5px;
+}
+
+.journal-table a {
+  padding: 5px !important;
+}
+
+
+/* Margins between headings and cells, excluding the first and last margins */
+/* .journal_table_th:not(:first-child):not(:last-child), 
+.journal_table_td:not(:first-child):not(:last-child) {
+ 
+}
+ */
+/* For 20 columns, apply to all cells except first and second last */
+
+
+/* The header */
+.journal_table_th {
+  background-color: rgba(32, 32, 32, 0.945); /* Use rgba for a more modern transparent background */
+  color: #376bdb; /* Set the text color */
+  width: 5%; /* Set the width */
+  padding: 8px; /* Add padding for better spacing */
+  text-align: left; /* Center align the text */
+  font-weight: 800;
+}
+
+
+/* Grids in the table */
+
+.journal_table_td:not(:last-child) {
+  border: none;
+  padding: 4px;
+  text-align: left;
+  width: 7%;
+  text-align: left;
+  height: auto;
+}
+
+/* color palette (line) */
+.journal-table-tr {
+  border: none;
+  padding: 20px ;
+  text-align: left;
+  overflow: hidden;
+}
+
+.journal_table_td.color-palette {
+  border: none;
+  padding: 5px;
+  text-align: left;
+}
+
+
+/* Regular state */
+.main-table-data tr:hover td:not(:nth-last-child(1)):not(:nth-last-child(2)):not(.action-container):not(.option-card):not(.color-palette) {
+  box-shadow: inset 0 0 100px 100px rgba(192, 192, 192, 0.396);
+  cursor: pointer;
+}
+
+
+.journal_table_th:first-child,
+.journal_table_td:first-child {
+  padding: 8px;
+  text-align: left;
+  width: 20px;
+  height: auto;
+}
+
+/* rounding of the right edge of the header */
+/* th:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* rounding of the last edge of the header*/
+/* th:nth-last-child(1) {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+} * 
+
+/* overlay 3 dots on white if the line is colored */
+
+.journal-table .expandable-row .journal_table_td:last-child {
+  background-color: transparent !important; 
+}
+/* --------------------------PAGINATION ---------------------------------------- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.step-links a {
+  display: inline-block;
+  padding: 2px 3px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 5px;
+  margin: 0 5px;
+  background-color: #fff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.step-links a:hover {
+  background-color: #f5f5f5;
+}
+
+.step-links .current-page {
+  display: inline-block;
+  padding: 2px 3px;
+  color: #fff;
+  background-color: #333;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+.step-links a[disabled] {
+  pointer-events: none;
+  color: #999;
+  border-color: #ffffff;
+  background-color: #f5f5f5;
+}
+/* --------------------------PAGINATION ---------------------------------------- */
+
+
+/* --------------------------STATISTIC CARD ---------------------------------------- */
+.container-metrics-table {
+  font-family: "Roboto Mono", monospace; 
+  font-size: small;
+  position: fixed;
+  bottom: 1%; 
+  right: 170px;
+  background-color: #fff;
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  margin: 10px;
+  
+}
+
+/* nadpis karty */
+.strategy-metrics-heading {
+  font-family: "Roboto Mono", monospace; 
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: medium;
+}
+
+/* celý object riadokov v metics karte */
+.metrics-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* jedotlivi riadok */
+.metrics-list li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  
+}
+/* for ex Total Profit */
+.label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* hodota v meticks boxe (%,€..) */
+.value {
+  color: #1b1b1b;
+}
+
+/* --------------------------STATISTIC CARD ---------------------------------------- */
+
+/* -----------------------------------ROWS HIGHLIGHTING -------------------------------- */
+
+/* objekt */
+.color-picker {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  border: 0 white solid !important;
+ 
+  
+ 
+}
+
+.color-palette {
+  padding-left: 10px;
+}
+
+.color-symbol {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  font-size: small;
+}
+
+.color-options {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.color-dot {
+  margin: 3px;
+  padding: 1px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+
+.color-picker-container {
+  position: relative;
+  border: none;
+  width: 5px;
+  margin-left: 20px;
+}
+
+
+/* collor brush */
+.journal_table_td:last-child {
+  width: 1px !important;
+  font-size: small;
+  margin-right: 10px;
+
+}
+
+.material-symbols-outlined {
+  font-size: 20px;
+  color: #000000;
+  margin-right: 10px;
+}
+
+/* -----------------------------------ROWS HIGHLIGHTING -------------------------------- */
+
+/* -----------------------------------3 dots and delete -------------------------------- */
+ .material-icons{
+ margin-left: 15px !important;
+}
+
+.action-container {
+  position: relative;
+  margin: 100px;
+}
+
+.action-symbol {
+  cursor: pointer;
+  font-size: 20px;
+  
+}
+
+
+.action-symbol .material-symbols-outlined {
+  cursor: pointer;
+  font-size: 20px;
+
+}
+
+.option-card {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1px;
+  z-index: 2;
+}
+
+.option-card a {
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+  color: #333;
+}
+
+.option-card a:hover {
+  background-color: #f0f0f0;
+ 
+}
+
+.action-symbol-container{
+  background-color: transparent !important;
+ 
+ 
+}
+.fas {
+ margin: 2px;
+}
+
+
+
+/* -----------------------------------3 dots and delete -------------------------------- */
+
+
+
+/*  .id_link {
+    display: inline-block;
+    padding: 1px 7px; 
+    background-color: hsl(0, 0%, 0%); 
+    color: #000000; 
+    text-decoration: none;
+    border: none;
+    border-radius: 1px;
+    cursor: pointer;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3); 
+    transform: translateY(0);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+ */
+/* .id_link:hover {
+    background-color: #5b9fca; 
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4); 
+    transform: translateY(-5px); 
+} */
+
+
+/* --------------- Search bar -------------- */
+
+.search-journal {
+ position: absolute;
+ margin-left: 250px;
+ top: 50px;
+ cursor: pointer;
+
+}
+
+.search-bar-journal {
+   display: none;
+   position: absolute;
+   margin-left: 290px;
+   flex-direction: row;
+   top: 50px;
+   
+}
+
+.search-bar-journal .search-bar {
+  width: 200px;
+  height: 20px;
+  margin-right: 30px;
+}
+
+.search-bar-journal .check-bar {
+  width: 15px;
+  height: 20px;
+  margin-right: 20px;
+}
+.search-bar-journal input,
+.search-bar-journal label{
+  margin: 0; 
+}

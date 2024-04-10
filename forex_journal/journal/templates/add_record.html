@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="form-heading">New Trade</h1>
+<div class="form-container">
+  <form method="POST" action="{% url 'journal:add-record' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="form-submit">Save</button>
+  </form>
+</div>
+{% endblock %}

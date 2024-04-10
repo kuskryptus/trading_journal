@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Edit Photo</h1>
+
+<div class="photo_form_container">
+<form method="POST">
+    {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+    <input type="submit" value="Save" />
+</form>
+</div>
+
+
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        height: 300, // Set the desired height for the TinyMCE window
+        width: 700, // Set the desired width for the TinyMCE window
+        // ... other config options here ...
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<header class="header-photos">
+  <h1 class="heading-photos" id="jdetail" >{{ record }}</h1>
+  <h5 class="under-heading-photos" id="jh5" >Everything you need to now about this trade is here</h5>
+  <div class="navigation-buttoms-photos">
+  <a class="back-from-photos" href="{% url 'journal:trade-detail' pk=record.id %}">Back</a>
+  <a class="back-to-records" href="{% url 'journal:home' %}">Records</a>
+</div>
+</header>
+<br>
+
+  <!-- Container containing photos of opened trades  -->
+  
+<div class="photos">
+      {% if photos_before %}
+      {% for photo in photos_before %}
+      
+      <div class="container-open">   
+        <div class="label-container-open">
+          <a class="label-open no-underline">OPEN</a>
+        </div>
+        
+        <div class="icons-open">
+          <a href="javascript:void(0);" onclick="event.preventDefault(); openModal('{{ photo.images.url }}','{{ photo.notes }}')" class="photo-link no-underline" title="Full-Size Image">📷
+            <img src="{{ photo.thumbnail.url }}">
+          </a>
+          <a href="{% url 'journal:edit-photo-before' pk=photo.id %}"  class="edit-icon no-underline" title="Edit Photo">✏️</a>
+          <a href="{% url 'journal:edit-note-before' pk=photo.id %}"  class="edit-note-icon no-underline" title="Edit Note">📝</a>
+          <a href="{% url 'journal:delete_data_before' pk=photo.id %}" class="delete-icon no-underline" title="Delete Note+Photo">🗑️</a>        
+          
+        </div> 
+        <a href="{% url 'journal:add_or_restore_before_data' pk=record.id %}" class="gg-add">➕</a>
+      </div> 
+        {% endfor %}
+    {% else %}
+    {% endif %}
+  
+   <!-- Container containing photos of opened trades  -->
+<br>
+
+
+  <!-- Container containing photos of closed trades  -->
+
+  <br>
+  {% if photos %}
+        {% for photo in photos %}
+        <div class="container-close">
+          <div class="label-container-close">
+            <a class="label-close no-underline">CLOSE</a>
+          </div>
+  
+            <div  class="icons-close">
+              <a href="javascript:void(0);" onclick="event.preventDefault(); openModal('{{ photo.images.url }}','{{ photo.notes }}')" class="photo-link no-underline" title="Full-Size Image">📷
+              </a>
+              <a href="{% url 'journal:edit-photo' pk=photo.id %}" class="no-underline" title="Edit Photo">✏️</a>
+              <a href="{% url 'journal:edit-note' pk=photo.id %}" class="no-underline" title="Edit Note">📝</a>
+              <a href="{% url 'journal:delete_data' pk=photo.id %}" class="no-underline" title="Delete Note+Photo">🗑️</a>    
+          </div>         
+            <a href="{% url 'journal:add_photos' pk=record.id %}" class="gg-add">➕</a>      
+        </div>     
+          <div class="fullImage" id="fullImage" style="display: none;">
+              <img src="{{ photo.images.url }}" alt="Trade Full-Size Photo">
+          </div>    
+          {% endfor %}
+    
+   </div>
+   {% else %}
+     <!-- if there are no photos -->
+        <div class="no-photo-state">
+          
+          <h2>No Photos for This Trade</h2>
+          <a href="{% url 'journal:add_photos' pk=record.id %}" class="add-photos-button">
+            <button class="btn btn-primary" role="button"><span class="text">+</span></button> 
+          </a> 
+          {% endif %}
+        </div>
+
+    <!-- Container containing photos of closed trades  -->
+
+
+<script>
+
+  </script>
+
+<script>
+function openModal(imageUrl, notes) {
+    const modal = document.getElementById("photoModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalNotes = document.getElementById("modalNotes");
+
+    modal.style.display = "block";
+    modalImage.src = imageUrl;
+
+    // Check if notes are present
+    if (notes.trim() !== '') {
+        modalNotes.innerHTML = decodeURIComponent(notes);
+        modalNotes.style.display = "block";  // Show the photo-note div
+    } else {
+        modalNotes.style.display = "none";   // Hide the photo-note div
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById("photoModal");
+    const modalNotes = document.getElementById("modalNotes");
+    const modalImage = document.getElementById("modalImage");
+
+    modal.style.display = "none";
+    modalNotes.style.display = "none";   // Hide the photo-note div when closing the modal
+
+}
+</script>
+
+<!-- <div id="fullImage" style="display: none;">
+  <img src="{{ photo.images.url }}"></div>   -->
+
+  <div id="photoModal" class="modal">
+    <div class="close-photo-button"><span class="x-symbol" onclick="closeModal()">&times;</span></div>
+    <div><img id="modalImage" class="modal-photo">
+    <div id="modalNotes" class="photo-note"></div>
+    </div>
+</div>
+
+
+{% endblock %}s

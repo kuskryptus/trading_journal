@@ -1,0 +1,14 @@
+*.pyc
+temp/
+Pipfile
+Pipfile.lock
+migrations/
+db.sqlite3
+venv/
+*.log
+Screenshots/
+celery.log
+media/
+*.exe
+config.cfg
+.env

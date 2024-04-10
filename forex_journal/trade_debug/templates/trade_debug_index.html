@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h1 class="tradedebug-h1">TRADE DEBUG</h1>
+
+  
+<div class="trade-card-debug-container">
+{% for trade in trades %}
+    {% if trade %}
+        <div class="trade_debug">
+            <span class="trade-counter">{{ forloop.counter}}.</span> <span class="debug-spartator">|</span>
+            <span class="trade-debug-data"> {{ trade.pair }}</span> <span class="debug-spartator">|</span>
+            <span class="trade-debug-data">{{ trade.entry_time}}</span> <span class="debug-spartator">|</span>
+            <span class="trade-debug-data">{{ trade.day }} </span> <span class="debug-spartator">|</span>
+            <span class="trade-debug-data">{{ trade.win_loss }} </span> <span class="debug-spartator">|</span>
+            
+            <span class="trade-debug-data">{{ trade.buy_sell }} </span> </div>
+    
+    {% else %}
+    <div class="No trade">No trades for now !</div>
+    {% endif %}
+    {% endfor %}
+    
+   
+</div>
+<div class="trade-debug-filter-container">
+    <input class="debug-search-bar" type="search" title="Search" placeholder="Search for trades..." >
+    <label><input class="debug-check-bar" type="checkbox" name="win_loss">Win/Loss</label> 
+    <label><input class="debug-check-bar" type="checkbox" name="day">Day</label>
+    <label><input class="debug-check-bar" type="checkbox" name="buy_sell">Buy/Sell</label>
+</div>
+
+
+<script>
+  const tradesContainer = document.querySelector('.trade-card-debug-container');
+
+  const checkboxes = document.querySelectorAll('.debug-check-bar');
+  const searchInput = document.querySelector('.debug-search-bar');
+
+  searchInput.addEventListener('input', sendData);  // Triggers trade fetch when search input changes
+  checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', sendData);  // Triggers trade fetch when checkbox changes
+  });
+
+  function sendData() {
+      const searchText = searchInput.value;
+
+      const checkedCheckboxes = Array.from(checkboxes)
+          .filter(checkbox => checkbox.checked)
+          .map(checkbox => checkbox.getAttribute('name'));
+
+      const formData = new FormData();
+      formData.append('search_text', searchText);
+      checkedCheckboxes.forEach(checkboxName => {
+          formData.append(`${checkboxName}_checked`, 'true');
+      });
+
+      fetch('/trade_debug/search_debug/', {
+          method: 'POST',
+          headers: {
+              'X-CSRFToken': getCookie('csrftoken'),
+          },
+          body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+          displayTrades(data);  // Calling a function to display trades based on the response data
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }
+
+  function displayTrades(data) {
+    tradesContainer.innerHTML = ''; 
+    if (data.trades && data.trades.length > 0) {
+        let tradeCounter = 1;
+        data.trades.forEach(trade => {
+            const tradeDiv = document.createElement('div');
+            tradeDiv.classList.add('trade_debug');
+
+
+            tradeDiv.innerHTML = `
+               <span class="trade-counter">${tradeCounter}.</span> <span class="debug-spartator">|</span>
+                <span class="trade-debug-data">${trade.pair}</span> <span class="debug-spartator">|</span>
+                <span class="trade-debug-data">${new Date(trade.entry_time).toLocaleString()}</span> <span class="debug-spartator">|</span>
+                <span class="trade-debug-data">${trade.day}</span> <span class="debug-spartator">|</span>
+                <span class="trade-debug-data">${trade.win_loss}</span> <span class="debug-spartator">|</span>
+                <span class="trade-debug-data">${trade.buy_sell}</span>
+            `; 
+
+            tradesContainer.appendChild(tradeDiv);
+            tradeCounter++;
+        });
+    } else {
+        tradesContainer.innerHTML = '<div class="No trade">No trades for now!</div>';
+    }
+}
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+{% endblock content %}
+
+

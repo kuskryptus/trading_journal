@@ -1,0 +1,42 @@
+[
+{
+  "model": "journal.photojournal",
+  "pk": 1,
+  "fields": {
+    "photo_journal": null,
+    "notes": "super",
+    "photo": "2023-09-19_10-14-13_l8dlnG8.png",
+    "trade": 8
+  }
+},
+{
+  "model": "journal.photojournal",
+  "pk": 2,
+  "fields": {
+    "photo_journal": null,
+    "notes": "skoda",
+    "photo": "USDJPY_2023-09-17_20-33-10_B4szoJz.png",
+    "trade": 2
+  }
+},
+{
+  "model": "journal.photojournal",
+  "pk": 3,
+  "fields": {
+    "photo_journal": null,
+    "notes": "1",
+    "photo": "EURNZD_2023-09-19_10-26-59_WwJB2cx.png",
+    "trade": 1
+  }
+},
+{
+  "model": "journal.photojournal",
+  "pk": 4,
+  "fields": {
+    "photo_journal": null,
+    "notes": "1",
+    "photo": "AUDJPY_2023-09-19_10-33-55_3WSMfeq_JNTgxQz.png",
+    "trade": 3
+  }
+}
+]

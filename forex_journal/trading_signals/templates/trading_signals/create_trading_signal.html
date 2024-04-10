@@ -1,0 +1,192 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1 class="h1-alert">Create New Alert</h1>
+
+<link rel="stylesheet" href="{% static 'css/create_trading_signal.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap" rel="stylesheet">
+
+<div class="trading_signals_container">
+    <form class="compare-indicator-form" action="" method="post">
+        {% csrf_token %}
+
+        <div class="checkbox-wrapper">
+            <label>Time Frames:</label>
+            <div class="checkbox-wrapper-time-frames">
+              {% for checkbox in time_frames %}
+                <div class="checkbox-item">
+                  {{ checkbox}}
+                  <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+
+        <!-- Access and Redesign available_pairs field -->
+        <div class="checkbox-wrapper">
+            <label class="pairs-to-select-heading">Track price for:</label><br>
+            {% for checkbox in form.available_pairs %}
+              <div class="checkbox-item">
+                {{ checkbox.tag }}
+                <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+              </div>
+            {% endfor %}
+          </div>
+
+
+         <!-- Scrolling options if the price is more/less... -->
+
+            <div class="compare_form">
+                <h4 class="bell-heading">🔔</h4>
+                {{ compare_form.compare_option }}
+            </div><br>
+        <!-- Choose a time frame -->
+        <!-- Access and Redesign available_indicators field -->
+        <div class="available-indicators">
+   
+        <select multiple class="custom-dropdown" id="{{ form.available_indicators.id_for_label }}" name="{{ form.available_indicators.name }}">
+            
+                    {% for indicator in form.available_indicators.field.queryset %}
+                    <option value="{{ indicator.pk }}">{{ indicator }}</option>
+                {% endfor %}
+                </select><br>
+            </div>
+    
+        <!-- Submit Button -->
+        <input id="submit-indicator-form" type="submit" value="Submit">
+    </form>
+    
+    <div class="reminder-message">
+        <p>Get alerts on social media too! <span class="discord_icon"><img src="{% static 'icons/icons8-discord-48.png' %}" alt="Discord Icon"></span>
+                    <span class="telegram_icon"><img src="{% static 'icons/icons8-telegram-48.png' %}" alt="telegram Icon">
+                </span><span class="gmail_icon"><img src="{% static 'icons/icons8-gmail-48.png' %}" alt="Gmail Icon"></span></p></div>
+</div>
+
+<div class="compare-price-form">
+    <h3 class="price-alert-h3">Create Price Alert</h3>
+    <form method="POST" action="{% url 'trading_signals:save_price_alert' %}">
+        {% csrf_token %}
+        {{ price_alert_form.forex_pair.errors }}
+        <div class="form-group">
+            <label for="id_forex_pair">Forex Pair:</label>
+            {{ price_alert_form.forex_pair }}
+        </div>
+        <div class="form-group">
+            <label for="id_price_level">Price Level:</label>
+            {{ price_alert_form.price_level }}
+        </div>
+        <input id="submit-price-alert" type="submit" value="create">
+    </form>
+</div>
+
+
+
+<style>
+.reminder-message {
+    position:absolute;
+    bottom: 0;
+    right: 0;
+    font-family: 'Ropa Sans', sans-serif;
+    font-size: 14px;
+    color: #fafafa; /* Text color */
+    padding: 5px;
+    width: 40%;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    margin-right: 3px;
+}
+
+.reminder-message p {
+    margin: 0; /* Remove default paragraph margin */
+}
+
+.discord_icon img {
+    width: 15px;
+    height: 15px;
+    margin-right: 3px;
+}
+
+.telegram_icon img {
+
+    width: 15px;
+    height: 15px;
+    margin-right: 3px;
+
+}
+
+.gmail_icon img {
+
+    width: 15px;
+    height: 15px;
+}
+
+
+</style>
+    <!-- Zvol si time frame -->
+    
+ <!--  <div class="already-selected-area">
+        <div id="selected-pairs">
+            <h2>Selected Pairs:</h2>
+            <p>{{ selected_pairs }}</p>
+        </div> -->
+    
+
+<!--     <div id="selected-indicators">
+        <h2>Selected Indicators</h2>
+        <p>{{ selected_indicators }}</p>
+    </div>
+</div> -->
+
+
+
+
+
+<!--     <div class="remove-pairs">
+        {% if selected_pairs_ %}
+        <form method="post" action="{% url 'trading_signals:remove_forex_pair' %}">
+            {% csrf_token %}
+            {{ form2.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        {% else %}
+        <h4>You have no selected pairs</h4>
+        {%endif%}
+  
+    </div>
+
+
+ -->
+
+
+<!--     <script>
+        // Dynamically update the selected pairs area based on user input
+        const availablePairsCheckboxes = document.querySelectorAll('.custom-checkbox');
+    
+        const selectedPairsTextarea = document.getElementById('id_selected_pairs');
+    
+        availablePairsCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Get the text next to the checkbox
+                const pairName = checkbox.nextSibling.textContent.trim();
+                let selectedPairs = selectedPairsTextarea.value;
+                if (checkbox.checked) {
+                    // Add the pair if not already present
+                    if (!selectedPairs.includes(pairName)) {
+                        selectedPairs += (selectedPairs ? ', ' : '') + pairName;
+                    }
+                } else {
+                    // Remove the pair
+                    selectedPairs = selectedPairs.replace(new RegExp(`\\b${pairName}\\b,?`), '');
+                }
+                selectedPairsTextarea.value = selectedPairs.trim();
+            });
+        });
+    </script> -->
+
+
+</body>
+
+{% endblock %}

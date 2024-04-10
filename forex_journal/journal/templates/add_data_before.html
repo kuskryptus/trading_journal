@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="photo_form_container">
+   <div class="form-heading">
+    {% if saved %}
+        <h1>Upload more photos</h1>
+    {% else %}
+        <h1>Upload Photo</h1>
+    {% endif %}
+  </div>
+
+    <form method="post" action="{% url 'journal:before-trade-data' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {{ form.images.label_tag }}
+        {{ form.images }}
+        {{ form.media }}
+        {{ form.notes }}
+    </br>
+        <button type="submit">Upload</button>
+    </form>
+    
+    <script>
+    tinymce.init({
+        selector: 'textarea',
+        height: 300,
+        width: 500,
+        // ... other config options here ...
+    });
+    </script>
+</div>
+
+<style>
+
+/* OBDLZNIK KTORY ZABALUJE TINY MICE */
+
+</style>
+
+{% endblock %}
+

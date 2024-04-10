@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    
+    <header>
+        <h1 class="onboarding-title">Welcome to your mistakes 2 profits journey</h1>
+    </header>
+
+<div class="onboarding-form">
+    <form method="POST" action="{% url 'accounts:onboard' %}">
+        <h2>Tell us about your style</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" title="submit">
+    </form>
+</div>
+    
+</body>
+</html>

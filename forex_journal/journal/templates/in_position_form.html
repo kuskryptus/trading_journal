@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="form-heading">Active Trade</h1>
+<div class="form-container">
+    
+<form class="inposition_form" method="POST" action="{% url 'journal:add-active-trade' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="form-submit">Save</button>
+</form>
+</div>
+{% endblock %}
+
+
+<style>
+.inposition_form{
+    position: relative;
+    left: -300;
+    margin: 100px;
+}
+
+</style>

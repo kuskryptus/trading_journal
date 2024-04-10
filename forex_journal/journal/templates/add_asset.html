@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form class="photo_form_container" method="POST" action="{% url 'journal:add_new_asset' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Save">
+</form>
+
+
+{% endblock %}

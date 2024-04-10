@@ -1,0 +1,292 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700');
+
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+.photos {
+  display: block;
+  background-color: rgba(255, 255, 255, 0);
+  width: 15rem;
+  margin-top: 20px;
+  padding: 10px;
+  margin-left: 15px;
+  margin-top: -10px ;
+}
+
+.header-photos {
+  margin-left: 550px;
+  display: flex;
+  position: relative;
+  background-color: #3f3f3f;
+  padding: 20px;
+  text-align: center;
+  right: 200px;
+  z-index: -1;
+  justify-content: center;
+  flex-direction: column;
+  font-family: 'Source Sans Pro', sans-serif;
+  border: solid rgb(230, 230, 230) 2px;
+  border-radius: 10px;
+}
+
+
+.heading-photos{
+ color: whitesmoke;
+}
+
+.under-heading-photos {
+  font-family: 'Source Sans Pro', sans-serif; ;
+  color: whitesmoke;
+}
+
+
+.container-open {
+  position: relative;
+  display: block;
+  margin-right: 5px ;
+  margin-left: 2px;
+  border: 10px rgb(59, 59, 59);
+  margin-bottom: 15px;
+  gap: 10px;
+  width: 12rem;
+  height: 80px;
+ /*  margin-left: 7px; */
+  background-color: hwb(0 92% 8%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  left: 200px;
+  
+}
+  
+
+.gg-add{
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  z-index: 1;
+}
+
+.container-open:hover{
+ background-color:  rgb(231, 231, 231);
+ transform-style: preserve-3d;
+ transform: translateY(-5px) translateZ(5px);
+}
+
+.container-close:hover{
+  background-color:  rgb(231, 231, 231);
+  transform-style: preserve-3d;
+  transform: translateY(-5px) translateZ(5px);
+ }
+
+a {
+  text-decoration: none;
+}
+
+.container-before p {
+  position: relative;
+  margin-left: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  bottom: 1px;
+}
+
+.container a {
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+.container-before a {
+  text-decoration: none;
+  
+}
+.container p {
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.container a {
+  text-decoration: none;
+  
+}
+/* OPEN heading on card container */
+.label-container-open {
+  margin-bottom: 10px;
+  margin-left: 10px;
+  
+
+}
+/* CLOSE heading on card container */
+.label-container-close {
+  margin-bottom: 10px;
+  margin-left: 10px;
+ 
+}
+
+/* OPEN heading label text  */
+.label-container-open a {
+  position: relative;
+  top: 3px;
+  padding: 0px 4px;
+  background-color: aquamarine;
+  border-radius: 4px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 14px;
+}
+
+/* CLOSE heading label text  */
+.label-container-close a {
+  position: relative;
+  top: 3px;
+  margin-top: 5px;
+  padding: 0px 4px;
+  background-color: rgb(243, 158, 60);
+  border-radius: 4px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 14px;
+}
+
+/* icons in the card OPEN */
+.icons-open {
+  text-decoration: none;
+  margin: 10px;
+
+}
+
+/* icons in the card CLOSE */
+.icons-close {
+  text-decoration: none;
+  margin: 10px;
+
+}
+
+
+.photo {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+
+
+
+/* OPENED PHOTO AFTER CLICKING ON PHOTO ICON + NOTES */
+/* Photo and not opened */
+.modal {
+  justify-content: center;
+  align-items: center;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  max-width: 60%;
+  
+  margin: 20px;
+  margin-left: 500px;
+  margin-top: 200px;
+ 
+}
+
+/* Apply styles to the close button on hover */
+
+
+.modal-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1px;
+  
+} 
+.photo-note {
+  position: relative;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+}
+
+.close-photo-button{
+  display: block;
+  position: relative;
+  margin-bottom: 5px;
+  color: rgb(0, 0, 0);
+  
+  left: 0px;
+  right: 0;
+  width: 20px;
+  margin-bottom: 25px;
+}
+
+.close-photo-button :hover {
+  cursor: pointer;
+  color: rgb(196, 2, 11);
+}
+
+.x-symbol {
+  display: block;
+  width: 20px;
+  height: 10px;
+  font-weight: 800;
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+/* OPENED PHOTO AFTER CLICKING ON PHOTO ICON + NOTES */
+
+
+
+.navigation-buttoms-photos{
+  display: flex;
+  flex-direction: row;
+  justify-content:  center;
+  align-items: center;
+}
+
+
+.back-from-photos:hover {
+  background-color: #3572a0;
+
+
+
+.back-to-records{
+margin: 5px;
+}
+
+
+.back-from-photos,
+.back-to-records {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.back-from-photos:hover,
+.back-to-records:hover {
+  background-color: #666;
+}
+
+.no-photo-state{
+  position: relative;
+  left: 200px;
+}
+
+.no-photo-state h2{
+  position: relative;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}}

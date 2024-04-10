@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- <h1 class="assets-heading">Your Assets</h1> -->
+
+
+
+<div class="category-container">
+    <h2>Categories</h2>
+    <div class="sector">
+    {% for sector in sectors  %}
+        <span>{{ sector }}  <div class="plus-button">+</div></span>
+       
+    {% endfor %}
+    </div>
+</div> 
+
+
+
+<a class="nav-item-asset" href="{% url 'journal:add_new_asset' %}">+ Assets</a>
+
+
+<style>
+
+.category-container {
+    
+    margin-left: 200px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;  /* align the content to the center */
+    padding: 10px;
+    top: 10%;
+    
+    }
+    
+.category-container h2 {
+        margin-bottom: 30px;  /* Add some spacing between the heading and sectors */
+    }
+    
+    
+.sector {
+        
+        flex-wrap: wrap;  /* Allow the sectors to wrap to the next line */
+        justify-content: center;  /* Center the sectors */
+    }
+    
+    .sector span {
+        display: inline-block;
+        padding: 0px 10px 0px 10px; /* Adjusted padding */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        cursor: pointer;
+        position: relative;
+        max-height: 350px;
+    }
+    
+
+    .plus-button {
+        display: none; /* Hide the plus button by default */
+        position: absolute;
+        left: 100%; /* Position it relative to the right edge of the .sector span */
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px; /* Explicit width */
+        height: 20px; /* Explicit height */
+        line-height: 20px; /* Center the text vertically */
+        text-align: center; /* Center the text horizontally */
+        background-color: rgb(154, 233, 233);
+        font-size: medium;
+        font-weight: 600;
+    }
+    
+    .sector span:hover + .plus-button {
+        display: block; /* Show the plus button when hovering over .sector span */
+    }
+
+
+.assets-heading{
+    margin-left: 220px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 0 ;
+   
+    text-align: center;
+    padding: 5px;  
+    }
+    
+.category-container span {
+        margin: 10px;
+    }
+
+</style>
+
+{% endblock content %}

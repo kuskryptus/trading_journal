@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="stratey_list_heading">Strategy List</h1>
+<ol class="strategy-list">
+  {% for strategy in strategies %}
+    <li class="strategy-item">
+      <a class="strategy-link" href="{% url 'journal:strategy_docs' strategy.id %}">{{ strategy }}</a>
+    </li>
+  {% endfor %}
+</ol>
+
+<div class="new-strategy-container">
+<form class="new-strategy" method="post" action="{% url 'journal:strategy_list' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" class="form-submit">
+</form>
+
+</div>
+<style>
+
+.stratey_list_heading{
+  display: flex;
+  justify-content: center;
+
+}
+
+.strategy-list {
+    list-style-type: none;
+    padding: 0;
+    margin-left: 220px;
+    padding: 20px;
+  }
+
+.strategy-item {
+    margin-block: 10px;
+  }
+
+.strategy-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.strategy-link:hover {
+  text-decoration: underline;
+}
+
+
+
+</style>
+
+{% endblock %}

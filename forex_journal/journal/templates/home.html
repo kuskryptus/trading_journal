@@ -1,0 +1,562 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Agdasima&family=Barlow+Condensed:wght@300&family=Roboto:ital,wght@0,100;1,400&family=Share+Tech+Mono&display=swap');
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-WHv93qPhvJ5C1xV8v2BGgT6jN0um0Tl2b94/8KZGBzlmY8e8YfopGz9BfXk/VthdVK7F7UpD0n1fZs1LZJBXfJw==" crossorigin="anonymous" />
+{% extends 'base.html' %}
+{% debug %}
+{% load static %}
+{% block content %}
+{% if journal %}
+
+
+<div class="search-bar-journal">
+  <input type="text" placeholder="Search" class="search-bar">
+
+  <label><input type="checkbox" name="time" class="check-bar"> Time</label>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const searchActiveUrl = "/journal/search-active/";
+  
+    document.querySelector('.search-bar').addEventListener('input', function() {
+      var searchTerm = this.value.trim();
+      var searchActive = searchTerm.length > 0; // Determine whether the search is active
+  
+      // Send the searchActive value to the search_active endpoint using fetch
+      fetch(`${searchActiveUrl}?search_active=${searchActive}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Handle the response from the server if needed
+          console.log("Response from server:", data);
+        })
+        .catch(error => console.error('Error', error));
+    }); 
+  });
+</script>
+
+<body class="table-records">
+  <table class="journal-table">
+    <thead class="columns_names">
+      <tr class="journal-table-tr">
+        <th class="journal_table_th">ID</th>
+        <th class="journal_table_th">Pair</th>
+        <th class="journal_table_th">Win/Loss</th>
+        <th class="journal_table_th">Buy/Sell</th>
+        <th class="journal_table_th">Time Frame</th>
+        <th class="journal_table_th">Day</th>
+        <th class="journal_table_th">Entry Time</th>
+        <th class="journal_table_th">Entry Price</th>
+        <th class="journal_table_th">Exit Time</th>
+        <th class="journal_table_th">Exit Price</th>
+        <th class="journal_table_th">P/L</th>
+        <th class="journal_table_th">Take Profit</th>
+        <th class="journal_table_th">Stop Loss</th>
+        <th class="journal_table_th">Session</th>
+        <th class="journal_table_th">Position Size</th>
+        <th class="journal_table_th">Strategy</th>
+        <th class="journal_table_th">R:R</th>
+
+      </tr>              
+    </thead>
+    <tbody class="main-table-data"  id="search-results-container">
+      {% if search_active %}
+        {% for record in all_records %}
+        <tr class="expandable-row"  data-record-id="{{ record.id }}">
+          <td onclick="event.stopPropagation();"><a class="trade-detail-link" href="{% url 'journal:trade-detail' pk=record.pk %}">{{ record.numbering}}</a></td>
+          <td class="journal_table_td">{{ record.pair}}</td>
+          <td class="journal_table_td">{{ record.win_loss}}</td>
+          <td class="journal_table_td">{{ record.buy_sell }}</td>
+          <td class="journal_table_td">{{ record.time_frame }}</td>
+          <td class="journal_table_td">{{ record.day }}</td>
+          <td class="journal_table_td">{{ record.entry_time|date:"Y-m-d H:i"}}</td>
+          <td class="journal_table_td">{{ record.entry_price }}</td>
+          <td class="journal_table_td">{{ record.exit_time|date:"Y-m-d H:i"}}</td>
+          <td class="journal_table_td">{{ record.exit_price }}</td>
+          <td class="journal_table_td">{{ record.profit }}</td>
+          <td class="journal_table_td">{{ record.tp_price }}</td>
+          <td class="journal_table_td">{{ record.sl_price }}</td>
+          <td class="journal_table_td">{{ record.session }}</td>
+          <td class="journal_table_td">{{ record.position_size }}</td>
+          <td class="journal_table_td">{{ record.strategy }}</td>
+          <td class="no-width">{{ record.r_r }}</td>
+          <td class="color-palette" style="background-color: transparent;">
+            <div id="color_symbol" class="color-picker-container">
+              <span class="color-symbol" onclick="showColorPicker('{{ record.id }}', event)">
+                <span class="material-symbols-outlined">format_ink_highlighter</span>
+              </span>
+
+              <div class="color-picker" id="colorPicker{{ record.id }}" onclick="event.stopPropagation();">
+                <div class="color-options" id="colorOptions{{ record.id }}"></div>
+              </div>
+            </div>
+          </td>
+          <td class="action-symbol-container" style="background-color: transparent;">
+            <span class="action-symbol material-icons" onclick="showOptions(this)">more_vert</span>
+            <div id="option_card" class="option-card" >
+              <a href="{% url 'journal:edit-record' record.id %}">Edit</a>
+              <a href="{% url 'journal:delete-record' record.id %}">Delete</a>
+            </div>
+          </td>
+          {% if record.exit_price is None and record.exit_time is None %}
+          <td class="no" style="background-color: transparent">
+            <div style="position: relative;">
+              <a href="{% url 'journal:complete-record' record.id %}" class="btn btn-primary"
+                style="position: absolute; left: 0; top: -20px;"
+                onclick="event.stopPropagation();">Close&nbsp;Trade</a>
+            </div>
+          </td>
+          {% endif %}
+      </tr>
+      {% endfor %}
+      {% else %}
+      {% for record in journal %}
+      <tr class="expandable-row"  data-record-id="{{ record.id }}">
+        <td onclick="event.stopPropagation();"><a class="trade-detail-link" href="{% url 'journal:trade-detail' pk=record.pk %}">{{ record.numbering}}</a></td>
+        <td class="journal_table_td">{{ record.pair}}</td>
+        <td class="journal_table_td">{{ record.win_loss}}</td>
+        <td class="journal_table_td">{{ record.buy_sell }}</td>
+        <td class="journal_table_td">{{ record.time_frame }}</td>
+        <td class="journal_table_td">{{ record.day }}</td>
+        <td class="journal_table_td">{{ record.entry_time|date:"Y-m-d H:i" }}</td>
+        <td class="journal_table_td">{{ record.entry_price }}</td>
+        <td class="journal_table_td">{{ record.exit_time|date:"Y-m-d H:i" }}</td>
+        <td class="journal_table_td">{{ record.exit_price }}</td>
+        <td class="journal_table_td">{{ record.profit }}</td>
+        <td class="journal_table_td">{{ record.tp_price }}</td>
+        <td class="journal_table_td">{{ record.sl_price }}</td>
+        <td class="journal_table_td">{{ record.session }}</td>
+        <td class="journal_table_td">{{ record.position_size }}</td>
+        <td class="journal_table_td">{{ record.strategy }}</td>
+        <td class="no-width">{{ record.r_r }}</td>
+        <td class="color-palette" style="background-color: transparent;">
+          <div id="color_symbol" class="color-picker-container">
+            <span class="color-symbol" onclick="showColorPicker('{{ record.id }}', event)">
+              <span class="material-symbols-outlined">format_ink_highlighter</span>
+            </span>
+
+            <div class="color-picker" id="colorPicker{{ record.id }}" onclick="event.stopPropagation();">
+              <div class="color-options" id="colorOptions{{ record.id }}"></div>
+            </div>
+          </div>
+        </td>
+        <td class="action-symbol-container" style="background-color: transparent;">
+          <span class="action-symbol material-icons" onclick="showOptions(this)">more_vert</span>
+          <div id="option_card" class="option-card" >
+            <a href="{% url 'journal:edit-record' record.id %}">Edit</a>
+            <a href="{% url 'journal:delete-record' record.id %}">Delete</a>
+          </div>
+        </td>
+        {% if record.exit_price is None and record.exit_time is None %}
+        <td class="no" style="background-color: transparent">
+          <div style="position: relative;">
+            <a href="{% url 'journal:complete-record' record.id %}" class="btn btn-primary"
+              style="position: absolute; left: 0px; top: -20px;"
+              onclick="event.stopPropagation();">Close&nbsp;Trade</a>
+          </div>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% endif %}
+    </tbody>
+  </table>
+
+</body>
+
+<div class="pagination">
+  <div class="step-links">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+    {% endif %}
+    <span class="current-page">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}"> &raquo;</a>
+    {% endif %}
+  </div>
+</div>
+
+
+  <!-- --------------Statistic behind table ------------- -->
+  <div class="container-metrics-table">
+    <h4 class="strategy-metrics-heading"> Strategy Metrics</h4>
+    <ul class="metrics-list">
+      <li>
+        <span class="label">Total Profit:</span>
+        <span class="value">{{ total_profit }}€</span>
+      </li>
+      <li>
+        <span class="label">Return %:</span>
+        <span class="value">{{ strategy_return }}%</span>
+      </li>
+      <li>
+        <span class="label">Win Rate:</span>
+        <span class="value">{{ win_rate }}%</span>
+      </li>
+
+      <li>
+        <span class="label">Account Balance:</span>
+        <span class="value">{{ account_balance }}€</span>
+      </li>
+
+
+    </ul>
+  </div>
+  <script>
+const rows = document.querySelectorAll('tr');
+
+// Loop through each row
+rows.forEach(row => {
+  // Get the total number of columns in the current row
+  const totalColumns = row.querySelectorAll('td').length;
+
+  // Determine the number of columns from the end for which the border radius should be applied
+  let columnsFromEnd = 3;
+  if (totalColumns === 20) {
+    columnsFromEnd = 4;
+  }
+
+  // Apply the border radius to the corresponding cells
+  const cells = row.querySelectorAll(`td:nth-last-child(-n+${columnsFromEnd})`);
+  cells.forEach(cell => {
+    cell.style.borderTopRightRadius = '0px'; /* Set curve */
+    cell.style.borderBottomRightRadius = '0px';
+  
+    
+  });
+});
+
+// Loop through each row
+rows.forEach(row => {
+  // Get the total number of columns in the current row
+  const totalColumns = row.querySelectorAll('td').length;
+
+  // Apply the border style based on the number of columns
+  if (totalColumns === 19) {
+    row.querySelectorAll('td:not(:first-child):not(:last-child)').forEach(cell => {
+      cell.style.borderLeft = 'solid rgba(192, 192, 192, 0.397) 1px';
+    });
+  } else if (totalColumns === 20) {
+    const cells = row.querySelectorAll('td:not(:first-child)');
+    
+    // Set border for the 17th column
+    cells[cells.length - 2].style.borderLeft = 'solid transparent 1px';
+
+
+  
+  }
+});
+</script>
+
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Check if the cookie name matches the one we're looking for
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      const tableRows = document.querySelectorAll('.main-table-data tr.expandable-row');
+
+      tableRows.forEach(row => {
+        const link = row.querySelector('a');
+        if (link) {
+          const recordId = link.getAttribute('href').split('/').pop(); //
+          if (recordId) {
+            const storedColor = localStorage.getItem(`color_${recordId}`);
+            if (storedColor) {
+              const cells = row.querySelectorAll('td:not(.color-palette):not(.no)');
+              cells.forEach(cell => {
+                cell.style.backgroundColor = storedColor;
+              });
+            }
+          }
+        }
+      });
+    });
+  </script>
+
+  <script>
+
+let openColorPicker = null; // Variable to track the currently open color picker
+
+function showColorPicker(recordId, event) {
+  // Stop event propagation to prevent row expansion
+  event.stopPropagation();
+
+
+  const colorPicker = document.getElementById(`colorPicker${recordId}`);
+  const colorPickerIcon = document.getElementById(`colorPickerIcon${recordId}`);
+
+  // Close the currently open color picker
+  if (openColorPicker && openColorPicker !== colorPicker) {
+    console.log('Closing the currently open color picker');
+    openColorPicker.style.display = 'none';
+  }
+
+  // Toggle the display of the color picker
+  colorPicker.style.display = colorPicker.style.display === 'block' ? 'none' : 'block';
+
+  // Create color options dynamically
+  const colorOptionsContainer = document.getElementById(`colorOptions${recordId}`);
+  colorOptionsContainer.innerHTML = '';
+
+  let defaultColor; // Declare defaultColor variable outside the event listener
+  // Add the default color as the last option in the colorOptions array
+  const colorOptions = ['#2ecc71', 'FE7773', 'clear'];
+
+  colorOptions.forEach(color => {
+  const colorDot = document.createElement('div');
+  colorDot.className = 'color-dot';
+
+  if (color === 'clear') {
+    colorDot.innerHTML = '<i class="fas fa-trash"></i>';
+  } else {
+    colorDot.style.backgroundColor = color;
+  }
+
+  colorDot.onclick = () => {
+    if (color === 'clear') {
+      clearColor(recordId, event);
+    } else {
+      selectColor(color, recordId, event);
+    }
+  };
+
+  colorOptionsContainer.appendChild(colorDot);
+});
+  
+      document.body.addEventListener('click', () => {
+        colorPicker.style.display = 'none';
+      });
+      /* no color option menu when click on the symbol of */
+      document.getElementById(`colorPicker${recordId}`).addEventListener('click', () => {
+        colorPicker.style.display = 'none';
+      });
+   
+  // Update the open color picker variable
+  openColorPicker = colorPicker;
+}
+
+
+    function selectColor(color, recordId, event) {
+      // Stop event propagation to prevent row expansion
+      event.stopPropagation();
+      localStorage.setItem(`color_${recordId}`, color);
+
+      fetch(`/set_color/${recordId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRFToken': getCookie('csrftoken'),  // Include CSRF token
+        },
+        body: `color=${color}`,
+      })
+
+        .then(response => response.json())
+
+      // Find the index of the selected row
+    
+      const tableRows = document.querySelectorAll('.main-table-data tr.expandable-row');
+      const selectedRow = Array.from(tableRows).findIndex(row => row.contains(event.target.closest('.color-symbol')));
+   
+      // Check if the row is found
+      if (selectedRow !== -1) {
+      
+        // Exclude the last cell (color palette) from coloring
+        const cells = tableRows[selectedRow].querySelectorAll('td:not(.color-palette):not(.no)');
+        cells.forEach(cell => {
+          cell.style.backgroundColor = color;
+        });
+
+        const colorPicker = document.getElementById(`colorPicker${recordId}`);
+        colorPicker.style.display = 'none';
+      }
+    }
+
+
+    function clearColor(recordId, event) {
+    event.stopPropagation();
+    localStorage.removeItem(`color_${recordId}`); // Remove the stored color
+
+    // Find the index of the selected row
+    const tableRows = document.querySelectorAll('.main-table-data tr.expandable-row');
+    const selectedRow = Array.from(tableRows).findIndex(row => row.contains(event.target.closest('.color-symbol')));
+
+    // Check if the row is found
+    if (selectedRow !== -1) {
+      // Exclude the last cell (color palette) from coloring and remove the background color
+      const cells = tableRows[selectedRow].querySelectorAll('td:not(.color-palette):not(.no)');
+      cells.forEach(cell => {
+        cell.style.backgroundColor = ''; // Revert to the default background color
+      });
+
+      const colorPicker = document.getElementById(`colorPicker${recordId}`);
+      colorPicker.style.display = 'none';
+    }
+  }
+
+  </script>
+
+<!-- ------------------------3 DOTS FOR EDIT AND DELETE RECORD------------- - -->
+<script>
+
+let openOptionCard = null; // Variable to track the currently open option card
+
+function showOptions(element) {
+  var optionCard = element.nextElementSibling;
+  var allOptionCards = document.querySelectorAll('.option-card');
+
+  // Close the currently open option card
+  if (openOptionCard && openOptionCard !== optionCard) {
+    openOptionCard.style.display = 'none';
+  }
+
+  // Toggle the display of the clicked option card
+  optionCard.style.display = (optionCard.style.display === 'block') ? 'none' : 'block';
+
+  // Update the open option card variable
+  openOptionCard = optionCard;
+}
+
+// Close option card when clicking outside or on another option card
+document.addEventListener('click', function (event) {
+  var optionCards = document.querySelectorAll('.option-card');
+  optionCards.forEach(function (card) {
+    if (!card.contains(event.target) && event.target.className !== 'action-symbol material-icons') {
+      card.style.display = 'none';
+    }
+  });
+
+  // Close option card when clicking on the color picker or color palette symbol
+  document.addEventListener('click', function (event) {
+  var optionCards = document.querySelectorAll('.option-card');
+  optionCards.forEach(function (card) {
+    if (!card.contains(event.target) && event.target.className !== 'action-symbol material-icons') {
+      card.style.display = 'none';
+    }
+  });
+
+  // Close the option card when clicking on the color picker for each row
+  var colorPickers = document.querySelectorAll('.color-picker');
+  colorPickers.forEach(function (picker) {
+    if (event.target === picker) {
+      openOptionCard = null; // Forcefully close the option card
+    }
+  });
+});
+
+  // Close option card when clicking outside the menu
+  if (!event.target.closest('.action-symbol-container')) {
+    openOptionCard = null;
+  }
+});
+</script>
+
+</body>
+
+<div class="search-journal">
+<span class="material-symbols-outlined">
+  search
+</span>
+</div>
+
+
+
+<!-- Make search bar visible when clicked on search icon -->
+<script>
+const searchIcon = document.querySelector('.search-journal');
+const searchBar = document.querySelector('.search-bar-journal');
+
+searchIcon.addEventListener('click', function() {
+  searchBar.style.display = 'flex'; // Show the search bar
+});
+
+document.addEventListener('click', function(event) {
+  const isClickInsideSearch = searchIcon.contains(event.target) || searchBar.contains(event.target);
+
+  if (!isClickInsideSearch) {
+    searchBar.style.display = 'none'; 
+  }
+});
+
+
+const searchInput = document.querySelector('.search-bar');
+const timeCheckbox = document.querySelector('.check-bar');
+const isTimeChecked = timeCheckbox.checked;
+const searchTerm = searchInput.value;
+
+searchInput.addEventListener('input', function() {
+  const searchTerm = searchInput.value;
+  const isTimeChecked = timeCheckbox.checked;
+
+  if (isTimeChecked) {
+    filterIds(searchTerm);
+  }
+
+});
+
+let filteredIds = []; // Array to store IDs
+
+function filterIds(searchTerm) {
+  const url = searchTerm ? `/journal/search_trade/?searchTerm=${searchTerm}` : '/journal/search_trade/';
+
+  fetch(url)
+  .then(response => response.json())
+  .then(data => { 
+      const filteredIds = data.filtered_data; // Access filtered data from JSON response
+      const searchActive = data.search_active; // Access search_active flag from JSON response
+      displayFilteredRecords(filteredIds, searchActive); // Pass filtered data and search_active flag to the display function
+  })
+  .catch(error => console.error('Error', error));
+}
+  
+function displayFilteredRecords(filteredIds, searchActive) {
+  // Hide all table rows
+  const tableRows = document.querySelectorAll('.expandable-row');
+  tableRows.forEach(row => {
+      row.style.display = 'none';
+  });
+
+  // Show table rows corresponding to filtered IDs
+  if (searchActive) {
+      filteredIds.forEach(id => {
+          const row = document.querySelector(`.expandable-row[data-record-id="${id}"]`);
+          if (row) {
+              row.style.display = 'table-row';
+          }
+      });
+  } else {
+      // If search is not active, display all table rows
+      tableRows.forEach(row => {
+          row.style.display = 'table-row';
+      });
+  }
+}
+
+</script>
+
+
+{% endblock %}

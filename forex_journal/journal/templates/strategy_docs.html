@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<header class="strategy-doc-header">
+<h1 class="trading_plan_h1">TRADIN PLAN</h1>
+<h2 class="strategy-header">{{object}}</h2>
+</header>
+<div class="trading_plan_position"></div>
+  <div class="form-container-trading-plan">
+    <form method="POST" class="form-trading-plan">
+      {% csrf_token %}
+
+      {{ form.media }}
+      {{ form.content|safe}}
+    </br>
+
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+</div>
+
+
+
+<style>
+
+  .trading_plan_position{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+ 
+
+  .form-container-trading-plan {
+    position: relative;
+    display: flex;
+    right: -500px;
+    justify-content: center;
+    align-items: center;
+    padding-right: 35px;
+    padding-left: 35px;
+    margin-top: 50px;
+    left:  470px;
+    max-width: fit-content;
+    max-height: fit-content;
+    border-radius: 10px;
+  }
+
+
+.form-trading-plan{
+  margin-top: 100px;
+}
+  
+</style>
+  
+{% endblock %}
+

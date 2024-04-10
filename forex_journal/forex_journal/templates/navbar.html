@@ -1,0 +1,47 @@
+{% load static %}
+<nav class="navbar">
+  <button class="navbar-toggler">&#9776;</button>
+  <a class="navbar-brand" href="{% url 'journal:home' %}">Mistakes<span>2</span>Profits</a>
+  <div class="navbar-links">
+    <a class="nav-item" href="{% url 'journal:home' %}"><span class="material-symbols-outlined">
+      receipt_long
+      </span> Records</a>
+    <a class="nav-item" href="{% url 'journal:add-record' %}"><span class="material-symbols-outlined">
+      add
+      </span>New Record</a>
+    <a class="nav-item" href="{% url 'journal:add-active-trade' %}"><span class="material-symbols-outlined">
+      add
+      </span> Active Trade</a>
+    <a class="nav-item" href="{% url 'journal:strategy_list' %}"><span class="material-symbols-outlined">
+      strategy
+      </span>Your Strategy</a>
+    <a class="nav-item" href="{% url 'journal:assets' %}"><span class="material-symbols-outlined">
+      monetization_on
+      </span>Assets</a>
+    <a class="nav-item" href="{% url 'trading_signals:signal_management' %}"><span class="material-symbols-outlined">
+      add_alert
+      </span> Alert</a>
+      <a class="nav-item" href="{% url 'trade_debug:trade_debug' %}"><span class="material-symbols-outlined">
+        bug_report
+        </span>Trade Debug</a>
+    
+    <a class="nav-item-settings" href="{% url 'settings' %}">Settings<span class="gear-image"><img src="{% static '/icons/settings-gear.png' %}" alt="settings-gear"></span></a>
+    <a class="log_out" href="{% url 'accounts:logout' %}">Logout</a>
+  </nav>
+ 
+  </div>
+
+
+<script>
+const navbarToggler = document.querySelector('.navbar-toggler');
+const navbarLinks = document.querySelector('.navbar-links');
+
+navbarToggler.addEventListener('click', () => {
+  navbarLinks.classList.toggle('collapsed');
+});
+</script>
+
+
+</body>
+
+

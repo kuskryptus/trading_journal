@@ -1,0 +1,70 @@
+
+<!-- FORMULAR NA PIDANIE FOTO PO PRIDANI TRADU -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% if saved %}
+        <h1 class="photo_form_header2" id="photo_form_heading">Upload more photos</h1>
+    {% else %}
+        <h1 class="photo_form_header" id="photo_form_heading">Upload Photo</h1>
+    {% endif %}
+
+    
+    <form method="post" action="{% url 'journal:add_photos' journal.id %}" class="photo_form_container" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {{ form.images.label_tag }}
+        {{ form.images }}
+        {{ form.notes | safe }}
+        {{ form.media }} <!-- Preusporiadanie -->
+        </br>
+        <button type="submit">Upload</button>
+    </form>
+    
+    <script>
+    tinymce.init({
+        selector: 'textarea',
+        height: 300,
+        width: 700,
+        plugins: [
+            'advlist autolink lists link image',
+            'charmap print preview anchor',
+            'searchreplace visualblocks code',
+            'insertdatetime media table paste wordcount image'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | image',
+        image_advtab: true,
+        file_picker_callback: function(callback, value, meta) {
+            if (meta.filetype === 'image') {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                input.onchange = function() {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        callback(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+
+                input.click();
+            }
+        }
+    });
+</script>
+
+{% endblock %}

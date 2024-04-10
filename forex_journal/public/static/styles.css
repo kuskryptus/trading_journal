@@ -1,0 +1,10 @@
+.login-register{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+}
+
+.login-register a {
+    margin-right: 10px;
+}

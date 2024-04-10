@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="form-heading">Close Data</h1>
+<div class="form-container">
+<form method="POST" action="{% url 'journal:complete-record' object.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="form-submit">Save</button>
+</form>
+</div>
+{% endblock %}

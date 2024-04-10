@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Welcome</title>
+</head>
+<body>
+    <div class="hero">
+        <div class="login-register">
+            <a href="{% url 'accounts:login' %}">Login</a>  
+            <a href="{% url 'accounts:register' %}">Register</a>
+        </div>
+        <div class="horizontal-navbar"></div>
+      
+    </div>
+    <div class="features">
+    </div>
+    <div class="call-to-action">
+    </div>
+    <div class="footer">
+    </div>
+
+</body>
+</html>

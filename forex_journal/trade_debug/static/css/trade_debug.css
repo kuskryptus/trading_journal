@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+
+.tradedebug-h1{
+    position: relative;
+    font-family: "Roboto Mono", monospace;
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem;
+    margin-left: 9%;
+}
+
+.trade-card-debug-container {
+    font-family: "Roboto Mono", monospace;
+    position: absolute;
+    margin-top: 8%;
+    margin-left: 30%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+    background-color: rgba(36, 36, 36, 0.616);
+    border-radius: 10px;
+
+}
+
+
+.trade_debug {
+    position: relative;
+    margin-bottom: 3%;
+    margin-top: 3rem;
+    width: 80%;
+    padding: 2%;
+    height: 2%;
+    background-color: white;
+    border-radius: 10px;
+    
+}
+
+.debug-spartator {
+    color: rgb(255, 51, 0);
+}
+
+.trade-debug-filter-container {
+    position: absolute;
+    top: 25%;
+    left: 30%;
+    margin-right: 20px;
+}
+
+.debug-search-bar {
+    margin-right: 10px;
+}
+
+
+.debug-check-bar {
+    margin-right: 10px;
+}
+
+.trade-debug-filter-container label  {
+    margin-right: 10px;
+}
